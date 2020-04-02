@@ -3,13 +3,6 @@ const dashDictionary = {
 }
 const categories = Object.keys(dashDictionary)
 const theGame = () => {
-	// const dashDictionary = {}
-	// jsonDict.forEach(item => {
-	// 	const {Category, ...def} = item;
-	// 	dashDictionary[Category] = dashDictionary[Category] ? dashDictionary[Category].concat(def) : [def]
-	// })
-	// console.log(typeSelectionElement)
-	console.log(dashDictionary)
 	const options = categories.map( cat => new Option(cat, cat))
 	options.forEach( option => typeSelectionElement.appendChild(option))
 }
