@@ -19,6 +19,7 @@ let selectedCategory = null
 
 const onCategorySelect = ({target}) => {
 	selectedCategory = target.value
+	typeSelectionForm.lastElementChild.disabled = !selectedCategory
 	console.log(selectedCategory)
 }
 
@@ -27,7 +28,6 @@ const pickACard = (event) => {
 	const count = dashDictionary[selectedCategory].length
 	const randomIdx = Math.random() * count
 	const theClue = dashDictionary[selectedCategory].splice(randomIdx, 1)[0]
-	console.log(randomIdx, theClue.Word)
 	displayAClue(theClue)
 }
 const displayAClue = (clue) => {
@@ -36,15 +36,23 @@ const displayAClue = (clue) => {
 	clueElement.innerText = clue.Word
 	answerElement.innerText = clue.Definition
 	answerElement.style.display = 'none'
-	resultPane.appendChild(clueElement)
-	resultPane.appendChild(answerElement)
-	resultPane.firstElementChild.style.display = 'block'
+	resultPane.firstElementChild.replaceWith(clueElement)
+	resultPane.lastElementChild.replaceWith(answerElement)
+	revealAnswerButton.style.display = 'block'
+	resetPageButton.style.display = 'block'
 }
 const revealDefinition = ()  =>	resultPane.lastElementChild.style.display = 'block'
 const rollTheDie = () => {
 	const result = Math.ceil(Math.random() * 6)
-dieElement.firstElementChild.innerHTML = result
-rollResult.innerText = `The category is: ${rollResultText[result]}`
+	dieElement.firstElementChild.innerHTML = result
+	rollResultElement.innerText = rollResultText[result]
+}
+
+const resetPage = () => {
+	rollResultElement.innerText = ''
+	dieElement.firstElementChild.innerHTML = 'Roll!'
+	resultPane.firstElementChild.replaceWith(document.createElement('h6'))
+	resultPane.lastElementChild.replaceWith(document.createElement('p'))
 }
 
 const theGame = () => {
@@ -53,10 +61,9 @@ const theGame = () => {
 	// select event handler
 	typeSelectionElement.addEventListener('input', onCategorySelect)
 	typeSelectionForm.addEventListener('submit', pickACard)
-	resultPane.firstElementChild.addEventListener('click', revealDefinition)
+	revealAnswerButton.addEventListener('click', revealDefinition)
 	dieElement.addEventListener('click', rollTheDie)
-	// input event handler OR RNG
-
+	resetPageButton.addEventListener('click', resetPage)
 }
 document.addEventListener('DOMContentLoaded', theGame)
 

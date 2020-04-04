@@ -4,24 +4,28 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
 		<title>DASH (Disease Avoidance Social Hilarity)</title>
 		<script src="dash.js"></script>
+		<link href="dash.css" rel="stylesheet">
 	</head>
 	<body>
 		<h1>D.A.S.H.</h1>
 		<h2>Clue generator</h2>
 		<section>
 			<h3>Roll for category...</h3>
-			<div id="dieElement"><span>Roll!</span></div>
-			<p id="rollResult"> </p>
+			<div class="dieElementContainer"><button id="dieElement"><span>Roll!</span></button></div>
+			<p id="rollResultElement"> </p>
 		</section>
 		<form action="submit" id="typeSelectionForm">
-			<label for="typeSelectionElement">Clue type</label>
+			<h3 for="typeSelectionElement">Clue type...</h3>
 			<select name="typeSelectionElement" class="type-select" id="typeSelectionElement">
 				<option value="">Select one</option>
 			</select>
-			<button type="submit">Pick a card...</button>
+			<button type="submit" disabled>Pick a card...</button>
 		</form>
 		<section id="resultPane">
-			<button style="display:none">Show me the answer!</button>
+			<h6></h6>
+			<p></p>
 		</section>
+		<button id="revealAnswerButton" style="display:none">Show the answer!</button>
+		<button id="resetPageButton" style="display:none">Next Round</button>
 	</body>
 </html>
