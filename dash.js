@@ -40,6 +40,7 @@ const displayAClue = (clue) => {
 	resultPane.lastElementChild.replaceWith(answerElement)
 	revealAnswerButton.style.display = 'block'
 	resetPageButton.style.display = 'block'
+	resultPane.style.opacity = 1
 }
 const revealDefinition = ()  =>	resultPane.lastElementChild.style.display = 'block'
 const rollTheDie = () => {
@@ -53,6 +54,7 @@ const resetPage = () => {
 	dieElement.firstElementChild.innerHTML = 'Roll!'
 	resultPane.firstElementChild.replaceWith(document.createElement('h6'))
 	resultPane.lastElementChild.replaceWith(document.createElement('p'))
+	resultPane.style.opacity = 0
 }
 
 const theGame = () => {
