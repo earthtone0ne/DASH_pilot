@@ -6,22 +6,21 @@ const stringifiedDict = `{
 }
 `
 const dashDictionary = JSON.parse(stringifiedDict)
-const rollResultText = {
-	1: 'Words',
-	2: 'People',
-	3: 'Words!',
-	4: 'Movie Plots',
-	5: 'Notable Dates',
-	6: 'Reader\'s Choice!',
-}
+const rollResultText = [
+	{name: 'Words', index: 1},
+	{name: 'People', index: 2},
+	{name: 'Words!', index: 1},
+	{name: 'Movie Plots', index: 4},
+	{name: 'Notable Dates', index: 3},
+	{name: 'Reader\'s Choice!', index: 0},
+]
 
 const categories = Object.keys(dashDictionary)
 let selectedCategory = null
 
-const onCategorySelect = ({target}) => {
-	selectedCategory = target.value
+const onCategorySelect = () => {
+	selectedCategory = typeSelectionElement.value
 	typeSelectionForm.lastElementChild.disabled = !selectedCategory
-	console.log(selectedCategory)
 }
 
 const pickACard = (event) => {
@@ -45,12 +44,18 @@ const displayAClue = (clue) => {
 }
 const revealDefinition = ()  =>	resultPane.lastElementChild.style.display = 'block'
 const rollTheDie = () => {
-	const result = Math.ceil(Math.random() * 6)
-	dieElement.firstElementChild.innerHTML = result
-	rollResultElement.innerText = rollResultText[result]
+	const result = Math.floor(Math.random() * 6)
+	dieElement.firstElementChild.innerHTML = result + 1
+	const {name, index} = rollResultText[result]
+	rollResultElement.innerText = name
+	typeSelectionElement.selectedIndex = index
+	selectedCategory = index ? name : null
+	onCategorySelect()
 }
 
 const resetPage = () => {
+	typeSelectionElement.selectedIndex = 0
+	onCategorySelect()
 	rollResultElement.innerText = ''
 	dieElement.firstElementChild.innerHTML = 'Roll!'
 	resultPane.firstElementChild.replaceWith(document.createElement('h6'))
@@ -67,6 +72,7 @@ const theGame = () => {
 	revealAnswerButton.addEventListener('click', revealDefinition)
 	dieElement.addEventListener('click', rollTheDie)
 	resetPageButton.addEventListener('click', resetPage)
+	onCategorySelect()
 }
 document.addEventListener('DOMContentLoaded', theGame)
 
